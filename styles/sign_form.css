@@ -1,0 +1,128 @@
+.sign-block {
+  width: 100%;
+  display: flex;
+  flex-shrink: 1;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+.signform {
+  display: flex;
+  width: 450px;
+  max-width: 500px;
+  height: fit-content;
+  flex-direction: column;
+  margin-top: 2%;
+  font-size: var(--second-font-size);
+  border: 1px solid var(--third);
+}
+.choose-phone-or-email {
+  width: 100%;
+  height: var(--fifth-height);
+  background-color: var(--third);
+  border-radius: 0 0 8px 8px;
+  display: flex;
+  align-items: center;
+  color: var(--white);
+}
+.with-email,
+.with-phone {
+  display: flex;
+  height: 100%;
+  width: 50%;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  opacity: 0.6;
+  transition: all 0.1s ease;
+}
+.with-email:hover,
+.with-phone:hover {
+  opacity: 1;
+}
+.with-email {
+  border-radius: 0 0 0 5px;
+}
+.with-phone {
+  border-radius: 0 0 5px 0;
+}
+.radio:has(:checked) {
+  box-shadow: inset 0 5px 5px var(--black);
+}
+#email-radio,
+#phone-radio {
+  display: none;
+}
+.sign-form {
+  display: flex;
+  padding: 10px;
+}
+.signform input,
+.signform .sign-form label {
+  display: inline-flex;
+  width: 100%;
+  height: var(--fourth-height);
+  align-items: center;
+  margin: 5px 0px;
+  color: var(--second);
+}
+.inputs input {
+  color: var(--black);
+}
+.inputs input:last-child {
+  text-align: center;
+}
+.signin {
+  margin-top: 50px;
+}
+.signup.signform:has(#phone-radio:checked) .form-label:nth-child(2),
+.signup.signform:has(#phone-radio:checked) #email,
+.signin.signform:has(#phone-radio:checked) .form-label:first-child,
+.signin.signform:has(#phone-radio:checked) #email,
+.signin.signform:has(#email-radio:checked) .form-label:nth-child(2),
+.signin.signform:has(#email-radio:checked) #phone {
+  display: none;
+}
+.signup.signform:has(#email-radio:checked) .form-label:nth-child(3),
+.signup.signform:has(#email-radio:checked) #phone {
+  display: none;
+}
+@media (max-width: 600px) {
+  .labels {
+    display: none;
+  }
+  .sign-form-option,
+  .signform {
+    width: 80%;
+    min-width: 300px;
+    margin-top: 5%;
+    max-width: 450px;
+  }
+  .sign-form-option {
+    display: block;
+    height: var(--fifth-height);
+    background-color: var(--third);
+    box-shadow: inset 0 0 1px 1px var(--second);
+    line-height: var(--fifth-height);
+    text-align: center;
+    text-transform: lowercase;
+    font-size: var(--third-font-size);
+    color: var(--white);
+    border: 1px solid var(--third);
+    border-radius: 6px;
+  }
+  .nav-bar {
+    display: none;
+  }
+}
+@media (min-width: 601px) {
+  .sign-form-option {
+    display: none;
+  }
+}
+.complete {
+  border: 1px solid var(--first);
+  background-color: var(--third);
+  color: var(--white) !important;
+  cursor: pointer;
+}

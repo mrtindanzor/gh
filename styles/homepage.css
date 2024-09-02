@@ -1,0 +1,212 @@
+.main-search {
+  margin: auto;
+  position: relative;
+  margin-top: 20px;
+}
+.main-search-box {
+  position: relative;
+  width: 100%;
+  padding: 10px 20px;
+  font-size: var(--second-font-size);
+  text-transform: capitalize;
+  border: 1px solid var(--first);
+  border-radius: 5px;
+  box-shadow: 0 0 2px 2px var(--second);
+}
+.main-search-button {
+  position: absolute;
+  right: 20px;
+  top: 7px;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+}
+.search-button-mirror {
+  width: var(--second-width);
+  height: var(--second-height);
+  border: 2px solid;
+  border-radius: 100%;
+  position: relative;
+}
+.mirror-hand {
+  width: 2px;
+  background-color: var(--black);
+  height: var(--first-height);
+  position: absolute;
+  right: -7px;
+  bottom: -6px;
+  transform: rotate(-60deg);
+}
+.post-ad-message {
+  width: fit-content;
+  margin: 30px auto;
+  padding: 0 10px;
+  color: var(--third);
+  text-align: center;
+  font-size: var(--third-font-size);
+  font-family: monospace;
+  font-weight: 500;
+}
+.post-ad-now {
+  transition: 1s ease;
+  width: fit-content;
+  padding: 10px 20px;
+  border: 1px solid currentColor;
+  border-radius: 4px;
+  font-size: var(--second-font-size);
+  display: inline-block;
+  margin-top: 5px;
+}
+.post-ad-now:hover {
+  transition: 1s ease;
+  background-color: var(--third);
+  color: var(--first);
+}
+.post-ad-now:hover::after {
+  content: " now";
+}
+.categories {
+  position: relative;
+}
+.main-categories {
+  position: absolute;
+}
+.sub-categories {
+  position: absolute;
+  width: 100%;
+  transform: translateX(-100%);
+}
+.subcat-activated {
+  transform: translateX(0%);
+}
+.maincat-deactivated {
+  transform: translateX(-100%);
+}
+.category-menu {
+  display: flex;
+  align-items: center;
+}
+.category-backbtn {
+  cursor: pointer;
+  background-color: var(--third);
+  margin: 1px;
+  height: 100%;
+  display: none;
+  border-radius: 5px 0 0 5px;
+}
+.category-backbtn:hover {
+  opacity: 0.8;
+}
+.categories-search:focus {
+  border: 2px solid var(--third);
+  box-shadow: 0 0 2px 2px var(--second);
+}
+.categories-search {
+  width: calc(100%);
+}
+.categories-search {
+  width: 100%;
+  padding: var(--second-padding);
+  border-radius: 3px;
+  border: 2px solid var(--second);
+  margin: 5px 0px 5px 5px;
+}
+@media (max-width: 600px) {
+  .main-container {
+    padding-bottom: var(--seventh-height);
+  }
+  .main-search {
+    width: 70dvw;
+  }
+  .post-ad-message {
+    font-size: var(--second-font-size);
+    letter-spacing: 2px;
+    font-weight: 300;
+  }
+  .categories {
+    width: 100dvw;
+  }
+  .sub-categories,
+  .main-categories {
+    margin: auto;
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1px;
+    padding: 10px;
+  }
+
+  .category-backbtn {
+    cursor: pointer;
+    background-color: var(--third);
+    padding: 3px;
+    margin: 2px 5px 2px 10px;
+    height: 100%;
+    border-radius: 5px 0 0 5px;
+  }
+  .categories-search {
+    margin: 15px;
+  }
+  .category {
+    color: var(--white);
+    font-size: var(--after-first-font-size);
+    width: 33%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    background-color: var(--third);
+    padding: 2px 10px;
+    cursor: pointer;
+  }
+  .category-image {
+    width: var(--seventh-width);
+  }
+  .category-title {
+    font-size: var(--after-first-font-size);
+    transform: scale(0.8);
+  }
+}
+@media (min-width: 601px) {
+  .main-search {
+    min-width: 400px;
+    width: 40dvw;
+    max-width: 600px;
+  }
+  .categories {
+    position: fixed;
+    bottom: 2px;
+    width: 30%;
+    max-width: 250px;
+    height: 400px;
+    overflow-y: scroll;
+  }
+  .category-menu {
+    position: sticky;
+    top: 0px;
+    z-index: 1;
+    background-color: var(--first);
+  }
+  .category {
+    color: var(--white);
+    display: flex;
+    width: 100%;
+    font-size: var(--after-first-font-size);
+    background-color: var(--third);
+    border-bottom: 2px solid var(--first);
+    padding: 5px 10px;
+    align-items: center;
+    cursor: pointer;
+  }
+  .category:hover {
+    opacity: 0.8;
+    border-right: 3px solid var(--sixth);
+  }
+  .category-image {
+    height: var(--fourth-height);
+  }
+}
+.category-backbtn-active {
+  display: block;
+}
