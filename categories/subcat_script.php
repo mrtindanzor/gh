@@ -1,5 +1,5 @@
 <?php
-include 'config.php';
+include $_SERVER['DOCUMENT_ROOT'].'/'.$_SERVER['SERVER_NAME'].'/gh/inc/config/config.php';
 $data = file_get_contents('php://input');
 $newdata = json_decode($data, true);
 $category_id = $newdata['id'];

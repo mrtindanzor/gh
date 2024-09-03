@@ -1,6 +1,4 @@
 <?php
-
-include 'categories/config.php';
 if($_SERVER["REQUEST_METHOD"] == "POST") {
   $password = trim($_POST['password']);
   $email = trim($_POST['email']);

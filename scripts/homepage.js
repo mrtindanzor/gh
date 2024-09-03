@@ -12,7 +12,7 @@ for (let category of mainCategories) {
     let id = category.dataset.id;
     const url = "categories/subcat_script.php";
     let header = new Headers();
-    header.append("Content-Type", "application/json; charset=UTF8");
+    header.append("Content-Type:", "application/json; charset=UTF8");
     let post = {
       id: id,
     };
@@ -51,7 +51,7 @@ for (let category of mainCategories) {
       let keyword = categoriesSearch.value.toLowerCase();
       for (let category of subCategories) {
         let title = category.textContent.toLowerCase();
-        if (!title.includes(keyword)) {
+        if (!title.includes(keyword) || title.startsWith(keyword)) {
           category.style.display = "none";
         } else {
           category.style.display = "flex";
@@ -76,10 +76,10 @@ categoriesSearch.addEventListener("input", () => {
   if (subCategoriesContainer.dataset.id != 1) {
     for (let category of mainCategories) {
       let title = category.textContent.toLowerCase();
-      if (!title.includes(keyword)) {
-        category.style.display = "none";
-      } else {
+      if (title.includes(keyword) || title.startsWith(keyword)) {
         category.style.display = "flex";
+      } else {
+        category.style.display = "none";
       }
     }
   }

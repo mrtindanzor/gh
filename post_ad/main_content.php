@@ -25,7 +25,20 @@ $down = (new icons('post-down-icon', 'Show more'))->fill_down_icon();
     </div>
   </div>
   <div class="ad-info">
-    <div class="ad-location-picker">Location *<?= $down ?></div>
+    <div class="ad-location-picker"><div class="location-text">Location *</div> <?= $down ?></div>
+    <input type="hidden" class="region-id" value="">
+    <input type="hidden" class="city-id" value="">
+    <div class="area-list">
+      <input type="text" class="region-search" placeholder="find location">
+      <div class="region-list">
+
+
+      </div>
+      <div class="city-list">
+
+      </div>
+
+    </div>
     <div class="ad-title">
       <input type="text" name="" id="title" class="title" placeholder="Title *">
 

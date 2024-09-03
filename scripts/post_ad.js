@@ -8,8 +8,16 @@ const mainPicker = document.querySelector(".main-category-picker"),
   subCatId = document.querySelector(".subcat-id"),
   mainCatText = document.querySelector(".maincat-text"),
   subCatText = document.querySelector(".subcat-text"),
+  locationText = document.querySelector(".location-text"),
   defaultText = "Select subcategory *",
   maxerror = document.querySelector(".error"),
+  locationPicker = document.querySelector(".ad-location-picker"),
+  regionId = document.querySelector(".region-id"),
+  cityId = document.querySelector(".city-id"),
+  areaList = document.querySelector(".area-list"),
+  regionList = document.querySelector(".region-list"),
+  cityList = document.querySelector(".city-list"),
+  regionSearch = document.querySelector(".region-search"),
   noSubcategories = ["9", "10", "11"];
 
 //fetch main categories
@@ -97,7 +105,6 @@ imagePicker.addEventListener("change", () => {
     maxerror.textContent = "maximum allowed pictures are 15";
     return;
   }
-
   files.forEach((file, index) => {
     if (
       file.type.endsWith("/jpg") ||
@@ -137,4 +144,98 @@ imagePicker.addEventListener("change", () => {
       return;
     }
   });
+});
+
+let fetches = 0;
+locationPicker.addEventListener("click", async () => {
+  regionList.setAttribute("data-Id", "1");
+  regionSearch.setAttribute("placeholder", "find region");
+  cityList.classList.remove("city-list-active");
+  areaList.classList.toggle("area-list-active");
+  regionList.classList.add("region-list-active");
+  if (fetches < 1) {
+    fetches++;
+    await fetch("inc/fetch_regions.php")
+      .then((response) => response.json())
+      .then((regions) => {
+        for (let region of regions) {
+          let regionItem = document.createElement("div");
+          regionItem.classList.add("region");
+          regionItem.setAttribute("data-Id", region.id);
+          regionItem.textContent = region.name;
+          regionList.append(regionItem);
+        }
+      });
+  }
+});
+
+regionList.addEventListener("click", (e) => {
+  if (e.target.classList.contains("region")) {
+    let region = e.target;
+    let id = region.dataset.id;
+    let url = "inc/fetch_cities.php";
+    data = {
+      id: id,
+    };
+    let postData = {
+      method: "POST",
+      header: {
+        "Content-Type": "application/json; charset=UTF8",
+      },
+      body: JSON.stringify(data),
+    };
+    fetch(url, postData)
+      .then((response) => response.json())
+      .then((cities) => {
+        cityList.innerHTML = "";
+        cities.forEach((city) => {
+          let cityItem = document.createElement("div");
+          cityItem.setAttribute("data-Id", city.id);
+          cityItem.textContent = city.name;
+          cityItem.classList.add("city");
+          cityList.append(cityItem);
+        });
+      });
+    regionId.value = id;
+    regionList.setAttribute("data-Id", "0");
+    regionSearch.setAttribute("placeholder", "find city");
+    cityList.classList.add("city-list-active");
+    regionList.classList.remove("region-list-active");
+  }
+});
+
+cityList.addEventListener("click", (e) => {
+  if (e.target.classList.contains("city")) {
+    let city = e.target;
+    let id = city.dataset.id;
+    cityId.value = id;
+    locationText.textContent = city.textContent;
+    cityList.classList.remove("city-list-active");
+    areaList.classList.remove("area-list-active");
+  }
+});
+
+regionSearch.addEventListener("input", () => {
+  let keyword = regionSearch.value.toLowerCase();
+  if (regionList.dataset.id == "1") {
+    let regions = document.querySelectorAll(".region");
+    regions.forEach((region) => {
+      let name = region.textContent.toLowerCase();
+      if (name.startsWith(keyword) || name.includes(keyword)) {
+        region.style.display = "flex";
+      } else {
+        region.style.display = "none";
+      }
+    });
+  } else {
+    let cities = document.querySelectorAll(".city");
+    cities.forEach((city) => {
+      let name = city.textContent.toLowerCase();
+      if (name.startsWith(keyword) || name.includes(keyword)) {
+        city.style.display = "flex";
+      } else {
+        city.style.display = "none";
+      }
+    });
+  }
 });
