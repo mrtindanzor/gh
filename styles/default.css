@@ -8,6 +8,7 @@
   --seventh: gold;
   --black: #000000;
   --white: #ffffff;
+  --transparent: #3e91cc60;
 
   --light-call-to-action-color: ;
 
@@ -105,7 +106,7 @@ a {
 }
 .dark-mode-toggle {
   background-color: var(--first);
-  position: absolute;
+  position: fixed;
   top: 15px;
   display: block;
   width: 60px;
@@ -232,8 +233,7 @@ a {
   }
   .dark-mode-toggle {
     background-color: var(--first);
-    z-index: 40;
-    position: fixed;
+    z-index: 3;
     right: 90px;
     top: 10px;
   }
@@ -270,7 +270,7 @@ a {
   .back-button-icon {
     height: var(--fourth-height);
   }
-  .page-title-nav {
+  .top-mobile-nav {
     position: fixed;
     top: 0px;
     display: flex;
@@ -282,13 +282,16 @@ a {
     color: var(--first);
     background-color: var(--third);
     text-transform: capitalize;
+    box-shadow: 0 2px 5px var(--second);
+    z-index: 2;
   }
   .nav-bar {
     width: 100dvw;
     height: var(--fourth-height);
     position: fixed;
     bottom: 0px;
-    z-index: 1000;
+    box-shadow: 2px 0 5px var(--second);
+    z-index: 2;
   }
   .nav-links {
     width: 100%;
@@ -322,10 +325,11 @@ a {
   }
 }
 @media (min-width: 601px) {
-  .page-title-nav {
+  .top-mobile-nav {
     display: none;
   }
   .dark-mode-toggle {
+    z-index: 3;
     left: 90px;
   }
   .sign-in-button,
@@ -345,6 +349,9 @@ a {
     font-variant: small-caps;
   }
   .nav-bar {
+    z-index: 2;
+    position: fixed;
+    top: 0px;
     width: 100%;
     height: var(--sixth-height);
     display: flex;
@@ -352,6 +359,7 @@ a {
     align-items: center;
     padding-right: var(--third-padding);
     background-color: var(--third);
+    box-shadow: 0 2px 5px var(--second);
   }
   .nav-links {
     list-style: none;

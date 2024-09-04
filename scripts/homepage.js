@@ -3,6 +3,12 @@ const allCategories = document.querySelector(".categories"),
   mainCategories = document.querySelectorAll(".main-category"),
   categoryBackbtn = document.querySelector(".category-backbtn"),
   categoriesSearch = document.querySelector(".categories-search"),
+  locationSearch = document.querySelector(".region-search-box"),
+  locationSelector = document.querySelector(".location-selector"),
+  locationList = document.querySelector(".display-regions-and-cities"),
+  regionsList = document.querySelector(".region-list"),
+  citiesList = document.querySelector(".cities-list"),
+  locationBackBtn = document.querySelector(".location-back-button"),
   subCategoriesContainer = document.querySelector(".sub-categories");
 
 //pull subcategories and add back button functionality
@@ -12,7 +18,7 @@ for (let category of mainCategories) {
     let id = category.dataset.id;
     const url = "categories/subcat_script.php";
     let header = new Headers();
-    header.append("Content-Type:", "application/json; charset=UTF8");
+    header.append("Content-Type", "application/json; charset=UTF8");
     let post = {
       id: id,
     };
@@ -70,7 +76,7 @@ categoryBackbtn.addEventListener("click", () => {
   subCategoriesContainer.innerHTML = "";
 });
 
-//search functionality
+//Add search functionality to categories and subcategories
 categoriesSearch.addEventListener("input", () => {
   let keyword = categoriesSearch.value.toLowerCase();
   if (subCategoriesContainer.dataset.id != 1) {
@@ -82,5 +88,24 @@ categoriesSearch.addEventListener("input", () => {
         category.style.display = "none";
       }
     }
+  }
+});
+
+locationSelector.addEventListener("click", () => {
+  locationList.classList.add("display-regions-and-cities-active");
+  regionsList.classList.add("region-list-active");
+  locationList.setAttribute("data-Id", "1");
+});
+
+//Back button functionality
+locationBackBtn.addEventListener("click", () => {
+  if (locationList.dataset.id == "1") {
+    locationList.classList.remove("display-regions-and-cities-active");
+    regionsList.classList.remove("region-list-active");
+  }
+  if (locationList.dataset.id == "2") {
+    locationList.setAttribute("data-Id", "1");
+    citiesList.classList.remove("cities-list-active");
+    regionsList.classList.add("region-list-active");
   }
 });

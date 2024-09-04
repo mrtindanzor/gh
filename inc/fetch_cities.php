@@ -1,5 +1,5 @@
 <?php
-if($_SERVER['REQUEST_METHOD' == 'POST']){
+if($_SERVER['REQUEST_METHOD'] == 'POST'){
   include 'config/config.php';
   $data = file_get_contents('php://input');
   $newdata = json_decode($data, true);
@@ -13,5 +13,3 @@ if($_SERVER['REQUEST_METHOD' == 'POST']){
   header('Content-Type: application/json; charset=UTF8');
   echo json_encode($rows);
 }
-
- ?>
