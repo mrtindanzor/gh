@@ -157,20 +157,44 @@
 .cities-list,
 .region-list {
   background-color: var(--first);
-  width: 80%;
-  height: 80%;
+  padding: 10px 20px;
   color: var(--second);
-  border-radius: 10px;
   display: none;
+  flex-direction: column;
+  overflow: hidden;
+  overflow-y: scroll;
+  column-gap: 15px;
+  row-gap: 5px;
+}
+.region,
+.city,
+.ghana,
+.whole-region {
+  font-size: var(--first-font-size);
+  cursor: pointer;
+  background-color: var(--third);
+  display: inline-flex;
+  width: 180px;
+  height: fit-content;
+  border-radius: 3px;
+  padding: 4px 8px;
+  color: var(--white);
+  justify-content: space-between;
+  align-items: center;
+}
+.display-regions-and-cities-active {
+  display: flex;
+}
+.region:hover,
+.city:hover,
+.ghana:hover,
+.whole-region:hover {
+  opacity: 0.8;
 }
 .location-back-button {
   cursor: pointer;
 }
-.cities-list-active,
-.region-list-active,
-.display-regions-and-cities-active {
-  display: flex;
-}
+
 @media (max-width: 600px) {
   .main-section {
     display: flex;
@@ -180,6 +204,46 @@
   }
   .main-search {
     width: 70dvw;
+  }
+  .display-regions-and-cities {
+    padding-top: 0px;
+  }
+  .regions-and-cities-wrapper {
+    width: 100%;
+    height: calc(100dvh - 10%);
+  }
+  .region-search {
+    width: 100%;
+    height: 10%;
+  }
+  .cities-list,
+  .region-list {
+    background-color: var(--first);
+    width: 100%;
+    height: 100%;
+    padding: 10px 0;
+  }
+  .region,
+  .city,
+  .ghana,
+  .whole-region {
+    font-size: var(--after-first-font-size);
+    cursor: pointer;
+    background-color: var(--first);
+    display: inline-flex;
+    width: 100%;
+    border-radius: none;
+    padding: 10px 10%;
+    color: var(--second);
+    border-bottom: 1px solid #ccc;
+  }
+  .cities-list-active,
+  .region-list-active {
+    display: flex;
+  }
+  .location-selector {
+    margin-left: 0;
+    transform: scale(0.8);
   }
   .post-ad-message {
     font-size: var(--second-font-size);
@@ -249,6 +313,31 @@
   .main-container {
     display: flex;
     gap: 20px;
+  }
+  .regions-and-cities-wrapper {
+    background-color: var(--first);
+    display: flex;
+    width: 80%;
+    height: 80%;
+  }
+  .cities-list-active,
+  .region-list-active {
+    display: inline-flex;
+  }
+  .region-list {
+    display: inline-flex;
+    width: 30%;
+    height: 98%;
+  }
+  .cities-list {
+    flex-direction: row;
+    align-content: flex-start;
+    flex-wrap: wrap;
+    width: 70%;
+    height: 98%;
+  }
+  .region::after {
+    content: ">";
   }
   .categories {
     position: sticky;

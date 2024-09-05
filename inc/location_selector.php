@@ -6,6 +6,9 @@
     </div>
     <input type="text" class="region-search-box" placeholder="find region...">
   </div>
-  <div class="region-list"></div>
-  <div class="cities-list"></div>
+  <div class="regions-and-cities-wrapper">
+    <div class="region-list"></div>
+    <div class="cities-list"></div>
+  </div>
+
 </div>

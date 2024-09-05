@@ -63,7 +63,7 @@
   }
 }
 body {
-  margin: 0;
+  margin: var(--seventh-height) 0;
   font-family: Geneva, Verdana, Tahoma;
   height: 100dvh;
   width: 100dvw;
