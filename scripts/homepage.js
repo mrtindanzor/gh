@@ -9,7 +9,8 @@ const allCategories = document.querySelector(".categories"),
   regionsList = document.querySelector(".region-list"),
   citiesList = document.querySelector(".cities-list"),
   locationBackBtn = document.querySelector(".location-back-button"),
-  subCategoriesContainer = document.querySelector(".sub-categories");
+  subCategoriesContainer = document.querySelector(".sub-categories"),
+  mainSection = document.querySelector(".main-section");
 //Get and set current city if set
 let cityChoice = localStorage.getItem("city");
 if (cityChoice != null) locationSelector.textContent = cityChoice;
@@ -17,7 +18,6 @@ if (cityChoice != null) locationSelector.textContent = cityChoice;
 //pull subcategories and add back button functionality
 for (let category of mainCategories) {
   category.addEventListener("click", async () => {
-    subCategoriesContainer.setAttribute("data-Id", "1");
     let id = category.dataset.id;
     const url = "categories/subcat_script.php";
     let header = new Headers();
@@ -30,9 +30,12 @@ for (let category of mainCategories) {
       header,
       body: JSON.stringify(post),
     };
+    subCategoriesContainer.setAttribute("data-Id", "1");
+
     await fetch(url, options)
       .then((response) => response.json())
       .then((categories) => {
+        subCategoriesContainer.innerHTML = "";
         for (let category of categories) {
           let subcategory = document.createElement("div"),
             image = document.createElement("img"),
@@ -50,31 +53,17 @@ for (let category of mainCategories) {
           subCategoriesContainer.append(subcategory);
           allCategories.scrollTo({ top: 0 }, 0);
         }
+        mainCategoriesContainer.style.display = "none";
+        subCategoriesContainer.style.display = "grid";
+        categoryBackbtn.style.display = "block";
       });
-
-    const subCategories = document.querySelectorAll(".subcategory");
-    mainCategoriesContainer.classList.add("maincat-deactivated");
-    subCategoriesContainer.classList.add("subcat-activated");
-    categoryBackbtn.classList.add("category-backbtn-active");
-    categoriesSearch.addEventListener("input", () => {
-      let keyword = categoriesSearch.value.toLowerCase();
-      for (let category of subCategories) {
-        let title = category.textContent.toLowerCase();
-        if (!title.includes(keyword) || title.startsWith(keyword)) {
-          category.style.display = "none";
-        } else {
-          category.style.display = "flex";
-        }
-      }
-    });
   });
 }
-
 //category back button
 categoryBackbtn.addEventListener("click", () => {
-  subCategoriesContainer.classList.remove("subcat-activated");
-  mainCategoriesContainer.classList.remove("maincat-deactivated");
-  categoryBackbtn.classList.remove("category-backbtn-active");
+  subCategoriesContainer.style.display = "none";
+  mainCategoriesContainer.style.display = "grid";
+  categoryBackbtn.style.display = "none";
   subCategoriesContainer.removeAttribute("data-id");
   subCategoriesContainer.innerHTML = "";
 });
@@ -82,11 +71,24 @@ categoryBackbtn.addEventListener("click", () => {
 //Add search functionality to categories and subcategories
 categoriesSearch.addEventListener("input", () => {
   let keyword = categoriesSearch.value.toLowerCase();
+
   if (subCategoriesContainer.dataset.id != 1) {
     for (let category of mainCategories) {
       let title = category.textContent.toLowerCase();
       if (title.includes(keyword) || title.startsWith(keyword)) {
-        category.style.display = "flex";
+        category.style.display = "inline-flex";
+      } else {
+        category.style.display = "none";
+      }
+    }
+  }
+
+  const subCategories = document.querySelectorAll(".subcategory");
+  if (subCategoriesContainer.dataset.id == 1) {
+    for (let category of subCategories) {
+      let title = category.textContent.toLowerCase();
+      if (title.includes(keyword) || title.startsWith(keyword)) {
+        category.style.display = "inline-flex";
       } else {
         category.style.display = "none";
       }
@@ -231,3 +233,28 @@ locationBackBtn.addEventListener("click", () => {
     regionsList.classList.add("region-list-active");
   }
 });
+
+fetch("inc/get_ads.php")
+  .then((response) => response.json())
+  .then((ads) => {
+    ads.forEach((ad) => {
+      let advert = document.createElement("a");
+      let imageDiv = document.createElement("div");
+      let img = document.createElement("img");
+      let title = document.createElement("span");
+      let price = document.createElement("span");
+      advert.setAttribute("href", `inc/ads.php?id=${ad.id}`);
+      advert.classList.add("ad-wrapper");
+      img.classList.add("ad-image");
+      imageDiv.classList.add("ad-image-wrapper");
+      title.classList.add("ad-title");
+      price.classList.add("ad-price");
+      img.src = ad.images;
+      title.textContent = ad.title;
+      let prices = Number(ad.price);
+      price.textContent = `GHS ${prices.toFixed("2")}`;
+      imageDiv.append(img);
+      advert.append(imageDiv, title, price);
+      mainSection.append(advert);
+    });
+  });

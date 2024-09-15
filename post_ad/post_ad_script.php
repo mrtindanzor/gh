@@ -1,8 +1,9 @@
 <?php
+session_start();
 if($_SERVER['REQUEST_METHOD'] == 'POST'){
-  $response = '';
+  include '../inc/config/config.php';
   $userId = $_SESSION['id'];
-  $title = $_POST['title'];
+  $adTitle = $_POST['title'];
   $description = $_POST['description'];
   $price = $_POST['price'];
   $mainCategoryId = $_POST['maincatId'];
@@ -15,14 +16,14 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
   $allowedFileSize = 2048000;
   $uploadFolder = 'uploads/';
   
-  if(empty($title)) return $response = 'You must add a title.';
-  if(empty($description)) return $response = 'You must add a description';
-  if(empty($price)) return $response = 'You must add the price';
-  if(empty($mainCategoryId)) return $response = 'Choose a category';
-  if(empty($subCategoryId)) return $response = 'Select a subcategory';
-  if(empty($regionId)) return $response = 'Please set a region for the item';
-  if(empty($cityId)) return $response = 'Please set a city for the item';
-  if($files['name'][0] == '') return $response = 'Please add some images to your ad';
+  if(empty($adTitle)) header('Location: ../post_ad.php?titleEmpty').exit();
+  if(empty($description)) header('Location: ../post_ad.php?descriptionEmpty').exit();
+  if(empty($price)) header('Location: ../post_ad.php?priceEmpty').exit();
+  if(empty($mainCategoryId)) header('Location: ../post_ad.php?mainCategoryEmpty').exit();
+  if(empty($subCategoryId)) header('Location: ../post_ad.php?subcategoryEmpty').exit();
+  if(empty($regionId)) header('Location: ../post_ad.php?regionIdEmpty').exit();
+  if(empty($cityId)) header('Location: ../post_ad.php?cityIdEmpty').exit();
+  if($files['name'][0] == '') header('Location: ../post_ad.php?imageFieldEmpty').exit();
 
   for($i = 0; $i < $filesLength; $i++){
     $fileName = $files['name'][$i];
@@ -31,20 +32,20 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
     $getFileExtension = explode('.', $fileName);
     $fileExtension = strtolower(end($getFileExtension));
     if($fileError !== 0){
-      return $response = 'An error occured while uploading images';
+     header('Location: ../post_ad.php?imageUploadError').exit();
     }
     if(!in_array($fileExtension, $allowedImageExtensions)){
-      return $response = 'Allowed images are jpg, jpeg and png only.';
+     header('Location: ../post_ad.php?imageExtensionNotAllowed').exit();
     }
     if($fileSize > $allowedFileSize){
-      return $response = 'Image size should be at most 2MB';
+     header('Location: ../post_ad.php?largeImageSize').exit();
     }
   }
 
   $sql = 'INSERT INTO adverts(userId, title, price, description, mainCategoryId, subCategoryId, regionId, cityId) VALUES (:userId, :title, :price, :description, :mainCategoryId, :subCategoryId, :regionId, :cityId)';
   $stmt = $conn->prepare($sql);
   $stmt->bindParam(':userId', $userId);
-  $stmt->bindParam(':title', $title);
+  $stmt->bindParam(':title', $adTitle);
   $stmt->bindParam(':price', $price);
   $stmt->bindParam(':description', $description);
   $stmt->bindParam(':mainCategoryId', $mainCategoryId);
@@ -71,10 +72,10 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
       $stmt->execute();
 
       if($stmt->rowCount() > 0){
-        move_uploaded_file($tmpFolder, $destination);
-        header('Location: '.$_SERVER["PHP_SELF"].'?success');
+        move_uploaded_file($tmpFolder, '../'.$destination);
       }
     }
   }
-
+  header('Location: ../post_ad.php?success');
+  exit();
 }

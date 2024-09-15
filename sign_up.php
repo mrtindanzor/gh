@@ -6,8 +6,8 @@ include 'inc/common/header.php';
 
 ?>
 <div class="sign-block">
-  <form action="<?= htmlspecialchars($_SERVER["PHP_SELF"]); ?>" class="signup signform" id="signform" method="post"
-    autocomplete="off">
+  <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" class="signup signform" id="signform"
+    method="post" autocomplete="off">
     <div class="choose-phone-or-email">
       <label for="email-radio" class="with-email radio">
         Email

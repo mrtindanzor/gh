@@ -2,7 +2,7 @@
 <div class="display-regions-and-cities">
   <div class="region-search">
     <div class="location-back-button">
-      <?= $backbutton;?>
+      <?php echo $backbutton; ?>
     </div>
     <input type="text" class="region-search-box" placeholder="find region...">
   </div>

@@ -9,7 +9,7 @@ const mainPicker = document.querySelector(".main-category-picker"),
   mainCatText = document.querySelector(".maincat-text"),
   subCatText = document.querySelector(".subcat-text"),
   locationText = document.querySelector(".location-text"),
-  defaultText = "Select subcategory *",
+  defaultText = "Select subcategory",
   maxerror = document.querySelector(".error"),
   locationPicker = document.querySelector(".ad-location-picker"),
   regionId = document.querySelector(".region-id"),
@@ -18,47 +18,61 @@ const mainPicker = document.querySelector(".main-category-picker"),
   regionList = document.querySelector(".region-list"),
   cityList = document.querySelector(".city-list"),
   regionSearch = document.querySelector(".region-search"),
-  noSubcategories = ["9", "10", "11"];
+  noSubcategories = ["9", "10", "11"],
+  hide = (object) => {
+    object.style.display = "none";
+  },
+  flexShow = (object) => {
+    object.style.display = "flex";
+  },
+  blockShow = (object) => {
+    object.style.display = "block";
+  };
 
 //fetch main categories
-
+let count = 0;
 mainPicker.addEventListener("click", async () => {
-  categoriesList = document.querySelector(".maincategories-list");
-  subcatDisplay.classList.remove("subcat-display-active");
-  if (categoriesList == null) {
+  hide(subcatDisplay);
+  hide(areaList);
+  if (maincatDisplay.style.display != "none") return hide(maincatDisplay);
+  subCatText.textContent = defaultText;
+
+  if (count == 0) {
+    count++;
     await fetch("categories/maincat_script.php")
       .then((response) => response.json())
       .then((categories) => {
         for (let category of categories) {
           let list = document.createElement("div");
-          list.classList.add("maincategories-list");
+          list.classList.add("main-category");
           list.textContent = category.name;
           list.setAttribute("data-Id", category.id);
           maincatDisplay.append(list);
         }
 
-        let allCategories = document.querySelectorAll(".maincategories-list");
+        let allCategories = document.querySelectorAll(".main-category");
         allCategories.forEach((category) => {
           category.addEventListener("click", () => {
             let id = category.dataset.id;
             mainCatId.value = id;
             mainCatText.textContent = category.textContent;
-            subCatText.textContent = defaultText;
             if (noSubcategories.includes(id)) {
-              subPicker.style.display = "none";
+              hide(subPicker);
             } else {
-              subPicker.style.display = "flex";
+              flexShow(subPicker);
             }
-            maincatDisplay.classList.toggle("maincat-display-active");
+            hide(maincatDisplay);
           });
         });
       });
   }
-  maincatDisplay.classList.toggle("maincat-display-active");
+  blockShow(maincatDisplay);
 });
 
 subPicker.addEventListener("click", async () => {
-  subCategoriesList = document.querySelector(".subcategories-list");
+  hide(areaList);
+  hide(maincatDisplay);
+  if (subcatDisplay.style.display != "none") return hide(subcatDisplay);
   let id = mainCatId.value;
   if (id > 0) {
     subcatDisplay.innerHTML = "";
@@ -78,21 +92,21 @@ subPicker.addEventListener("click", async () => {
       .then((categories) => {
         for (let category of categories) {
           let list = document.createElement("div");
-          list.classList.add("subcategories-list");
+          list.classList.add("sub-category");
           list.textContent = category.name;
           list.setAttribute("data-Id", category.id);
           subcatDisplay.append(list);
         }
       });
-    let allCategories = document.querySelectorAll(".subcategories-list");
+    let allCategories = document.querySelectorAll(".sub-category");
     allCategories.forEach((category) => {
       category.addEventListener("click", () => {
         subCatId.value = category.dataset.id;
         subCatText.textContent = category.textContent;
-        subcatDisplay.classList.toggle("subcat-display-active");
+        hide(subcatDisplay);
       });
     });
-    subcatDisplay.classList.toggle("subcat-display-active");
+    blockShow(subcatDisplay);
   }
 });
 
@@ -118,10 +132,10 @@ imagePicker.addEventListener("change", () => {
         img.classList.add("preview");
         img.src = fr.result;
         let remove = document.createElement("div");
-        remove.classList.add("image-remove");
-        remove.textContent = "x";
+        remove.classList.add("remove-preview");
+        remove.textContent = "+";
         let imageDiv = document.createElement("div");
-        imageDiv.classList.add("image-preview-object");
+        imageDiv.classList.add("preview-image");
         imageDiv.append(img, remove);
         imagePreview.append(imageDiv);
 
@@ -148,11 +162,13 @@ imagePicker.addEventListener("change", () => {
 
 let fetches = 0;
 locationPicker.addEventListener("click", async () => {
+  hide(maincatDisplay);
+  hide(subcatDisplay);
   regionList.setAttribute("data-Id", "1");
   regionSearch.setAttribute("placeholder", "find region");
-  cityList.classList.remove("city-list-active");
-  areaList.classList.toggle("area-list-active");
-  regionList.classList.add("region-list-active");
+  hide(cityList);
+  blockShow(areaList);
+  blockShow(regionList);
   if (fetches < 1) {
     fetches++;
     await fetch("inc/fetch_regions.php")
@@ -199,8 +215,8 @@ regionList.addEventListener("click", (e) => {
     regionId.value = id;
     regionList.setAttribute("data-Id", "0");
     regionSearch.setAttribute("placeholder", "find city");
-    cityList.classList.add("city-list-active");
-    regionList.classList.remove("region-list-active");
+    blockShow(cityList);
+    hide(regionList);
   }
 });
 
@@ -210,8 +226,8 @@ cityList.addEventListener("click", (e) => {
     let id = city.dataset.id;
     cityId.value = id;
     locationText.textContent = city.textContent;
-    cityList.classList.remove("city-list-active");
-    areaList.classList.remove("area-list-active");
+    hide(cityList);
+    hide(areaList);
   }
 });
 

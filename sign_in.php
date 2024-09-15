@@ -5,7 +5,8 @@ $sign_in_page = true;
 include 'inc/common/header.php';
 ?>
 <div class="sign-block">
-  <form action="<?= htmlspecialchars($_SERVER["PHP_SELF"]); ?>" class="signform signin" id="signform" method="post">
+  <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" class="signform signin" id="signform"
+    method="post">
     <div class="choose-phone-or-email">
       <label for="email-radio" class="with-email radio">
         Email
