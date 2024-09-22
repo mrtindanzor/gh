@@ -1,0 +1,24 @@
+<?php
+if (isset($_GET['titleEmpty'])) $response = 'Add a title';
+if (isset($_GET['descriptionEmpty'])) $response = 'Add a description';
+if (isset($_GET['priceEmpty'])) $response = 'Add the price';
+if (isset($_GET['mainCategoryEmpty'])) $response = 'Choose a category';
+if (isset($_GET['subcategoryEmpty'])) $response = 'Select a subcategory';
+if (isset($_GET['regionIdEmpty'])) $response  = 'Select region for this advert';
+if (isset($_GET['cityIdEmpty'])) $response = 'Select city for this advert';
+if (isset($_GET['negotiateEmpty'])) $response  = 'Choose if negotiable or not';
+if (isset($_GET['conditionEmpty'])) $response = 'Select advert condition';
+if (isset($_GET['imageFieldEmpty'])) $response = 'Add some images to your ad';
+if (isset($_GET['imageUploadError'])) $response = 'An error occured while uploading images';
+if (isset($_GET['imageExtensionNotAllowed'])) $response = 'Only jpg, jpeg and png allowed';
+if (isset($_GET['largeImageSize'])) $response = 'Image size should be at most 2MB';
+if (isset($_GET['success'])) $success_response = 'Your Advert has been posted successfully';
+if (isset($_GET['titleError'])) $response = 'Title must only be alphanumeric characters';
+if (isset($_GET['descriptionError'])) $response = 'Description must only be alphanumeric characters';
+if (isset($_GET['priceError'])) $response = 'Price must only be numeric characters';
+if (isset($_GET['mainCategoryIdError'])) $response = 'Invalid category selection';
+if (isset($_GET['subCategoryIdError'])) $response = 'Invalid subcategory selection';
+if (isset($_GET['regionIdError'])) $response  = 'Invalid region selection';
+if (isset($_GET['cityIdError'])) $response = 'Invalid city selection';
+if (isset($_GET['negotiateError'])) $response  = 'Negotiable value invalid';
+if (isset($_GET['conditionError'])) $response = 'Invalid condition selection';

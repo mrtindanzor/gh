@@ -1,49 +1,54 @@
-<?php
-$down = (new icons('post-down-icon', 'Show more'))->fill_down_icon();
-?>
-<form class='main-container' method="post" action="post_ad/post_ad_script.php" enctype="multipart/form-data">
-  <?php if(isset($response)) echo $response; ?>
-  <div class='main-category-picker span-2'>
-    <?php echo $down ?>
-    <div class='maincat-text'>Select category </div>
-    <input type='hidden' name="maincatId" class='maincat-id' value="">
-  </div>
-  <div class='maincat-display span-2'></div>
-  <div class='sub-category-picker span-2'>
-    <?php echo $down ?>
-    <div class='subcat-text'>Select subcategory </div>
-    <input type='hidden' name="subcatId" class='subcat-id' value="">
-  </div>
-  <div class='subcat-display span-2'></div>
-  <div class='select-images span-2'>
-    <label for='image-picker' class='image-picker-label'>
-      <?php echo $upload_icon = (new icons('upload','upload'))->cloud(); ?>
-    </label>
-    <input type='file' id='image-picker' name="images[]" class='image-picker' accept='image/*' multiple>
-    <div class='previews span-2'></div>
-    <div class='error span-2'></div>
-  </div>
-  <div class='ad-location-picker span-2'>
-    <?php echo $down ?>
-    <div class='location-text'>Location </div>
-  </div>
-  <input type='hidden' name="region-id" class='region-id' value=''>
-  <input type='hidden' name="city-id" class='city-id' value=''>
-  <div class='area-list span-2'>
+<form method="post" action="post_ad/post_ad_script.php" enctype="multipart/form-data" class="form-container">
+  <?php if(isset($response)) echo '<div class="response">'.$response.'</div>'; ?>
+  <?php if(isset($success_response)) echo '<div class="success_response">'.$success_response.'</div>'; ?>
+
+  <label for="category" class='main-category-picker'>
+    <div class='maincat-text'>Choose category </div>
+    <input type="hidden" id="category" name="maincatId" class='maincat-id' value="">
+  </label>
+  <div class='maincat-display'></div>
+
+  <label for="subcategory" class='sub-category-picker'>
+    <div class='subcat-text'>Choose subcategory </div>
+    <input type="hidden" id="subcategory" name="subcatId" class='subcat-id' value="">
+  </label>
+  <div class='subcat-display'></div>
+
+  <label for="image-picker" class="image">
+    <?php echo $upload_icon = (new icons('upload','upload'))->cloud() ; ?>
+    Add images
+    <input type="file" id='image-picker' name="images[]" class='image-picker' accept='image/*' multiple>
+  </label>
+  <div class='previews'></div>
+  <div class='error'></div>
+
+  <label for="region-id" class='ad-location-picker'>
+    <div class='location-text'>Choose location </div>
+    <input type='hidden' name="region-id" id="region-id" class='region-id' value=''>
+    <input type='hidden' name="city-id" class='city-id' value=''>
+  </label>
+  <div class='area-list'>
     <input type='text' class='region-search' placeholder='find location'>
-    <div class='region-list span-2'>
+    <div class='region-list'>
     </div>
-    <div class='city-list span-2'>
+    <div class='city-list'>
     </div>
   </div>
-  <div class='ad-title span-2'>
-    <input type='text' name='title' id='title' class='title' placeholder='Title '>
+
+  <input type="text" name="title" id="" class="title" placeholder="Title">
+
+  <div for="condition" class="condition-wrapper">
+    Condition
+    <input type="radio" name="condition" id="" value="1">Brand New
+    <input type="radio" name="condition" id="" value="0">Used
   </div>
-  <div class='ad-description span-2'>
-    <textarea class='description' name="description" rows="5" id='description' placeholder='Description'></textarea>
+
+  <textarea class='description' name="description" rows="5" id='description' placeholder='Description'></textarea>
+  <input type='text' name='price' id='price' class='price' placeholder='Price '>
+  <div for="negotiate" class="negotiate-wrapper">
+    Negotiable
+    <input type="radio" name="negotiate" id="" value="1">Yes
+    <input type="radio" name="negotiate" id="" value="0">No
   </div>
-  <div class='ad-price span-2'>
-    <input type='number' name='price' id='price' class='price' placeholder='Price '>
-  </div>
-  <button class='submit span-2'>Post Ad</button>
+  <input type="submit" value="Post Ad" class="submit">
 </form>

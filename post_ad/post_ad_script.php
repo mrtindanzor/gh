@@ -11,10 +11,15 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
   $regionId = $_POST['region-id'];
   $cityId = $_POST['city-id'];
   $files = $_FILES['images'];
+  $negotiate = $_POST['negotiate'];
+  $condition = $_POST['condition'];
   $filesLength = count($files['name']);
   $allowedImageExtensions = ['jpg', 'jpeg', 'png'];
   $allowedFileSize = 2048000;
   $uploadFolder = 'uploads/';
+  $alpha_numeric_pattern = '/^[a-zA-Z0-9_]+$/'; 
+  $numeric_pattern = '/[0-9]/';
+  $alpha_pattern = '/[a-zA-Z]/';
   
   if(empty($adTitle)) header('Location: ../post_ad.php?titleEmpty').exit();
   if(empty($description)) header('Location: ../post_ad.php?descriptionEmpty').exit();
@@ -22,8 +27,20 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
   if(empty($mainCategoryId)) header('Location: ../post_ad.php?mainCategoryEmpty').exit();
   if(empty($subCategoryId)) header('Location: ../post_ad.php?subcategoryEmpty').exit();
   if(empty($regionId)) header('Location: ../post_ad.php?regionIdEmpty').exit();
+  if(!isset($condition)) header('Location: ../post_ad.php?conditionEmpty').exit();
+  if(!isset($negotiate)) header('Location: ../post_ad.php?negotiateEmpty').exit();
   if(empty($cityId)) header('Location: ../post_ad.php?cityIdEmpty').exit();
   if($files['name'][0] == '') header('Location: ../post_ad.php?imageFieldEmpty').exit();
+
+  // if(!preg_match($alpha_numeric_pattern, $adTitle)) header('Location: ../post_ad.php?titleError').exit();
+  // if(!preg_match($alpha_numeric_pattern, $description)) header('Location: ../post_ad.php?descriptionError').exit();
+  if(!preg_match($numeric_pattern, $price)) header('Location: ../post_ad.php?priceError').exit();
+  if(!preg_match($numeric_pattern, $mainCategoryId)) header('Location: ../post_ad.php?mainCategoryIdError').exit();
+  if(!preg_match($numeric_pattern, $subCategoryId)) header('Location: ../post_ad.php?subCategoryIdError').exit();
+  if(!preg_match($numeric_pattern, $regionId)) header('Location: ../post_ad.php?regionIdError').exit();
+  if(!preg_match($numeric_pattern, $cityId)) header('Location: ../post_ad.php?cityIdError').exit();
+  if(!preg_match($numeric_pattern, $negotiate)) header('Location: ../post_ad.php?negotiateError').exit();
+  if(!preg_match($numeric_pattern, $condition)) header('Location: ../post_ad.php?conditionError').exit();
 
   for($i = 0; $i < $filesLength; $i++){
     $fileName = $files['name'][$i];
@@ -42,7 +59,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
     }
   }
 
-  $sql = 'INSERT INTO adverts(userId, title, price, description, mainCategoryId, subCategoryId, regionId, cityId) VALUES (:userId, :title, :price, :description, :mainCategoryId, :subCategoryId, :regionId, :cityId)';
+  $sql = 'INSERT INTO adverts(userId, title, price, description, mainCategoryId, subCategoryId, regionId, cityId, adCondition, negotiable) VALUES (:userId, :title, :price, :description, :mainCategoryId, :subCategoryId, :regionId, :cityId, :adCondition, :negotiable)';
   $stmt = $conn->prepare($sql);
   $stmt->bindParam(':userId', $userId);
   $stmt->bindParam(':title', $adTitle);
@@ -52,6 +69,8 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
   $stmt->bindParam(':subCategoryId', $subCategoryId);
   $stmt->bindParam(':regionId', $regionId);
   $stmt->bindParam(':cityId', $cityId);
+  $stmt->bindParam(':adCondition', $condition);
+  $stmt->bindParam(':negotiable', $negotiate);
   $stmt->execute();
   $advertId = $conn->lastInsertId();
 
@@ -61,7 +80,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
       $tmpFolder = $files['tmp_name'][$i];
       $getFileExtension = explode('.', $fileName);
       $fileExtension = strtolower(end($getFileExtension));
-      $newFileName = uniqid('', true).'.'.$fileExtension;
+      $newFileName = uniqid('dwom.com-', true).'.'.$fileExtension;
       $destination = $uploadFolder.$newFileName;
       
       $sql = 'INSERT INTO adverts_images VALUES (:userId, :advertId, :images)';

@@ -6,8 +6,8 @@
 .main-section {
   display: grid;
   padding: 10px;
-  grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
-  gap: 10px 20px;
+  grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+  gap: 10px;
 }
 .main-search-box {
   position: relative;
@@ -126,6 +126,7 @@
   margin: 5px 0px 5px 5px;
 }
 .ad-wrapper {
+  position: relative;
   display: inline-flex;
   border: none;
   height: 320px;
@@ -145,10 +146,12 @@
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
+  text-transform: capitalize;
 }
 .ad-price {
   padding-top: 0;
   color: var(--third);
+  font-size: var(--after-first-font-size);
 }
 .ad-image-wrapper {
   width: 100%;
@@ -230,9 +233,58 @@
   cursor: pointer;
 }
 
+.ad-negotiate,
+.ad-condition {
+  position: absolute;
+  font-size: var(--after-first-font-size);
+  right: 2px;
+  padding: 3px 10px;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.ad-negotiate {
+  bottom: 90px;
+  background-color: var(--fourth);
+  color: var(--white);
+}
+
+.ad-condition {
+  top: 10px;
+  background-color: var(--seventh);
+  color: var(--white);
+  font-weight: 900;
+}
+.ad-save {
+  position: absolute;
+  bottom: 30px;
+  right: 10px;
+  width: var(--fourth-width);
+  height: var(--fourth-height);
+  padding: 9px;
+  background-color: var(--first);
+  border-radius: 50%;
+  color: var(--second);
+  box-shadow: 0 0 5px var(--second);
+}
+.ad-save::after {
+  content: "";
+  display: block;
+  position: absolute;
+  bottom: 0px;
+  right: 0px;
+  width: var(--fourth-width);
+  height: var(--fourth-height);
+  border-radius: 50%;
+  background-color: transparent;
+  z-index: 1;
+}
+.ad-save:hover {
+  background-color: var(--fifth);
+  color: var(--second);
+}
 @media (max-width: 600px) {
   .main-section {
-    grid-template-columns: repeat(2, minmax(200px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
   }
   .main-container {
     padding-bottom: var(--sixth-height);

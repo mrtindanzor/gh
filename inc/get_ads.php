@@ -1,13 +1,8 @@
 <?php 
 include 'config/config.php';
-// $data = file_get_contents('php://input');
-// $decoded_data = json_decode($data);
-// if(!empty($decoded_data['maincate'])) $sql = '';
-// if(!empty($decoded_data['subcat'])) $sql = '';
-// if(!empty($decoded_data['regionId'])) $sql = '';
-// if(!empty($decoded_data['cityId'])) $sql = '';
-$sql = 'SELECT adverts.*, Min(adverts_images.images) as images FROM adverts INNER JOIN adverts_images WHERE adverts.id = adverts_images.advertId GROUP BY adverts.id ORDER BY adverts.id DESC;
+$sql = 'SELECT adverts.*, Min(adverts_images.images) as images FROM adverts INNER JOIN adverts_images WHERE adverts.id = adverts_images.advertId AND adverts.status = 1 GROUP BY adverts.id ORDER BY adverts.id DESC;
 ';
+$status = 1;
 $stmt = $conn->prepare($sql);
 $stmt->execute();
 $rows = $stmt->fetchAll(PDO::FETCH_OBJ);

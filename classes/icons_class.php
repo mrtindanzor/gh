@@ -22,10 +22,36 @@ public function phone_fill(){
 $classname = $this->classname;
 $title = $this->title;
 
-return '<svg viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg" class="'.$classname.'">
+return '<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" fill="currentColor"  class="'.$classname.'">
   <title>'.$title.'</title>
   <path
     d="M21 16.42V19.9561C21 20.4811 20.5941 20.9167 20.0705 20.9537C19.6331 20.9846 19.2763 21 19 21C10.1634 21 3 13.8366 3 5C3 4.72371 3.01545 4.36687 3.04635 3.9295C3.08337 3.40588 3.51894 3 4.04386 3H7.5801C7.83678 3 8.05176 3.19442 8.07753 3.4498C8.10067 3.67907 8.12218 3.86314 8.14207 4.00202C8.34435 5.41472 8.75753 6.75936 9.3487 8.00303C9.44359 8.20265 9.38171 8.44159 9.20185 8.57006L7.04355 10.1118C8.35752 13.1811 10.8189 15.6425 13.8882 16.9565L15.4271 14.8019C15.5572 14.6199 15.799 14.5573 16.001 14.6532C17.2446 15.2439 18.5891 15.6566 20.0016 15.8584C20.1396 15.8782 20.3225 15.8995 20.5502 15.9225C20.8056 15.9483 21 16.1633 21 16.42Z" />
+</svg>';
+}
+
+public function plus_circle(){
+$classname = $this->classname;
+$title = $this->title;
+
+return '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="'.$classname.'">
+  <defs>
+    <style>
+    .cls-1 {
+      fill: #fff;
+      opacity: 0;
+    }
+    </style>
+  </defs>
+  <title>'.$title.'</title>
+  <g id="Layer_2" data-name="Layer 2">
+    <g id="plus-circle">
+      <g id="plus-circle-2" data-name="plus-circle">
+        <rect class="cls-1" width="24" height="24" />
+        <path class="cls-2" d="M12,2A10,10,0,1,0,22,12,10,10,0,0,0,12,2Zm0,18a8,8,0,1,1,8-8A8,8,0,0,1,12,20Z" />
+        <path class="cls-2" d="M15,11H13V9a1,1,0,0,0-2,0v2H9a1,1,0,0,0,0,2h2v2a1,1,0,0,0,2,0V13h2a1,1,0,0,0,0-2Z" />
+      </g>
+    </g>
+  </g>
 </svg>';
 }
 
@@ -107,7 +133,7 @@ public function logout(){
 $classname = $this->classname;
 $title = $this->title;
 
-return '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="'.$classname.'">
+return '<svg xmlns="http://www.w3.org/2000/svg"  fill="currentColor" viewBox="0 0 24 24" class="'.$classname.'">
   <defs>
     <style>
     .cls-1 {

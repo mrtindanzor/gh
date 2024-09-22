@@ -9,6 +9,8 @@ const darkModeButton = document.getElementById("dark-mode-toggle"),
   phoneField = document.getElementById("phone"),
   emailField = document.getElementById("email");
 
+let checkSSState = 0;
+
 //auto set theme based on value stored in localStorage
 if (localStorage.getItem("dark-mode") == 1) {
   body.classList.toggle("dark-mode");
@@ -51,3 +53,21 @@ const clearField = (Object, secondObject) => {
     secondObject.value = "";
   }
 };
+const checkSS = async () => {
+  addSavedBtn = document.querySelectorAll(".ad-save");
+  fetch("inc/checkss.php")
+    .then((res) => res.json())
+    .then((data) => {
+      checkSSState = data.state;
+    });
+
+  if (checkSSState == 1 && addSavedBtn != null) {
+    addSavedBtn.forEach((save) => {
+      save.addEventListener("click", () => {
+        window.location.href = "sign_in.php";
+      });
+    });
+  }
+};
+
+checkSS();

@@ -1,10 +1,11 @@
+<?php if(!isset($homepage_page)) echo '<div class="back-button" onclick="history.back()">'.$backbutton.'</div>';?>
 <div class="nav-bar">
   <?php
-    (!isset($homepage_page)) ? print '<div class="back-button" onclick="history.back()">'.$backbutton.'</div>' :'';
-    (!isset($_SESSION['id'])) ? print $login : '';
+  
+    (!isset($_SESSION['id'])) ? print $log_auth : '';
   ?>
   <div class="nav-links <?php isset($_SESSION['id']) ? '' : print 'not-logged-in'; ?>">
-    <div class="nav-link homepage">
+    <div class="nav-link homepage <?php isset($homepage_page) ?  print 'active-page' : ''; ?>">
       <a href="index.php" title="Homepage">
         <?php echo $homebutton; ?>
       </a>
